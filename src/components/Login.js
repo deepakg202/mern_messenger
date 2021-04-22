@@ -17,7 +17,7 @@ function LoginPage(props) {
     let error = {};
     // Validate the values related to the login form here
     if (!username) {
-      error.username = "username is required";
+      error.username = "Username is required";
     }
     if (password.length < 6)
       error.password = "Password should be of min 6 characters.";
@@ -30,25 +30,26 @@ function LoginPage(props) {
   };
 
   return (
-    <div>
+    <div className="container">
       <h1>
           <center>Welcome</center>
       </h1>
       <div>
-        <form onSubmit={submitHandler}>
-          <fieldset disabled={loading}>
-            <div>
-              <input type="text" name="username" placeholder="Enter Username"/>
-            </div>
-            <small>{formErrors.username}</small>
-            <div>
-              <input type="password" name="password" placeholder="Enter Password"/>
-            </div>
-            <small>{formErrors.password}</small>
-            
-            <div><button type="submit">Login</button></div>
-          </fieldset>
-        </form>
+      <form onSubmit={submitHandler}>
+        <fieldset disabled={loading}>
+        <div className="mb-3">
+          <label htmlFor="username" className="form-label">Username</label>
+          <input type="text" className="form-control" id="username"/>
+          <div className="text-danger">{formErrors.username}</div>
+       </div>
+        <div className="mb-3">
+          <label htmlFor="password" className="form-label">Password</label>
+          <input type="password" className="form-control" id="password"/>
+          <div className="text-danger">{formErrors.password}</div>
+        </div>
+        <button type="submit" className="btn btn-primary">Submit</button>
+        </fieldset>
+      </form>
         <div>{error}</div>
       </div>
     </div>

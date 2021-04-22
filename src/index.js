@@ -1,12 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
 import App from './App';
 import { BrowserRouter } from "react-router-dom";
 // import reportWebVitals from './reportWebVitals';
 
 import { Provider, connect } from "react-redux";
 import store from "./store";
+import './assets/scss/app.scss';
 
 const ReduxApp = connect((state, ownProps) => ({state: state, ownProps: ownProps}), null)(App);
 

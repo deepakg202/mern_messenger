@@ -28,12 +28,7 @@ module.exports = {
       if (!token) throw Error("Couldnt sign the token");
 
       req.session.token = token;
-
-      res.status(200).json({
-        status: "OK",
-        token: token,
-        message: "Session Token Created"
-      });
+      next();
     } catch (error) {
       console.log(error);
       res.status(405).json({

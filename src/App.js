@@ -1,18 +1,21 @@
-import React,{useEffect} from "react";
-import { Route, Switch, Redirect} from 'react-router-dom';
+import React, { useEffect } from "react";
+import { Route, Switch, Redirect } from 'react-router-dom';
 import { getSession } from "./actions/sessionActions";
-import {useDispatch, useSelector} from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import Login from "./components/Login"
-import './App.css';
+import Chat from "./components/Chat"
 
+import Header from "./components/shared/Header"
+import Dashboard from "./components/Dashboard"
+import Settings from "./components/Settings"
+import Error from "./components/Error"
 
 const App = (props) => {
 
   const dispatch = useDispatch();
   const { sessionInfo, checked } = useSelector(state => state.session);
 
-  // dispatch may be removed and replaced with direct api call
   useEffect(() => {
     if (!checked) {
       dispatch(getSession());
@@ -22,27 +25,47 @@ const App = (props) => {
   const NoSessionRoutes = () => {
     return (
       <Switch>
-        <Route path="/login" exact component={Login}/>
+        <Route path="/login" exact component={Login} />
+        <Route component={() => <Redirect to="/login" />} />
       </Switch>
     );
   };
 
+  const SuperAdminRoute = (props) => {
+    const isSuperAdmin = sessionInfo.userType === "SUPER_ADMIN"
+    if(isSuperAdmin) {
+      return <Route {...props}/>
+    }else{
+      return <Route {...props} component={() => <Error message={"Not accessible to normal users"}/>}/>
+    }
+  }
+
+
   const SessionRoutes = () => {
     return (
       <Switch>
-        <Route path="/login" exact component={<Redirect to="/"/>} />
+        <Route path="/login" exact component={() => <Redirect to="/" />} />
+        <Route path="/chat" exact component={Chat} />
+        <SuperAdminRoute path="/settings" exact component={Settings} />
+        <Route path="/" exact component={Dashboard} />
+      
       </Switch>
     );
   };
   const RoutesHandler = () => {
-    if (!checked) return <div/>;
+    if (!checked) return <div>Loading...</div>;
     else {
       if (!sessionInfo) return <NoSessionRoutes />;
       else return <SessionRoutes />;
     }
   };
 
-  return (<RoutesHandler />)
+  return (<React.Fragment><Switch>
+      <Header/>
+      </Switch>
+      <Switch>
+      <RoutesHandler/>
+    </Switch></React.Fragment>)
 }
 
 export default App;
