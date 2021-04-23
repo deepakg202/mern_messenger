@@ -1,38 +1,46 @@
 import React, { useState, useEffect } from "react";
 import {useSelector} from "react-redux";
-import socketIOClient from "socket.io-client";
+import socket from "../utils/socket";
 
 function Chat() {
   
   const [messages, setMessages] = useState([]) 
   const {username} = useSelector((state) => state.session.sessionInfo)
-  const socket = socketIOClient("/chat")
+  const [online, setOnline] = useState(0)
 
   useEffect(() => {
+    socket.on('new-connection', (n) => {
+      setOnline(n)
+    })
     socket.on("new-message", message => {
       setMessages((msgs) => [...msgs, message])
     });
-    return () => socket.disconnect()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    return () => {
+      socket.disconnect();
+    }
   }, []);
 
   const chatHandler = (e) => {
     e.preventDefault();
     const msg = e.target.elements["message"].value;
     if(msg)
-      socket.emit("send-message", {msg: msg, author: username})
+      socket.emit("send-message", {msg: msg, author: username || "Anonymous"})
   }
 
   const Message = ({msg, author}) => {
-
-    return <div className="text-start text-white bg-warning">{author}: {msg}</div>
+    if(author === username)
+    {
+      return <div className="text-end text-white bg-primary p-2 m-1">{msg}</div>
+    }else{
+      return <div className="text-start text-white bg-warning p-2 m-1">{author}: {msg}</div>
+    }
   }
 
 
   return (
     <div className="container my-3">
-      <div className="h2">Global Chat</div>
-      <div id="chatSection">
+      <div className="h2">Global Chat <span className="text-success h6">Online: {online}</span></div>
+      <div className="p-2 border rounded">
         <div id="chat-window" className="overflow-y-auto bg-dark my-2">
           {
             messages.map((m,i) => <Message key={i} msg={m.msg} author={m.author}/>)
