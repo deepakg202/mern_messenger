@@ -7,6 +7,7 @@ import {removeSession} from "../../actions/sessionActions"
 const NoSessionLinks = (props) => {
   return (<React.Fragment>
     <Link className="nav-link" to="/login">Login</Link>
+    <Link className="nav-link" to="/signup">Signup</Link>
   </React.Fragment>)
 }
 

@@ -19,6 +19,7 @@ module.exports = {
       //Creating a Token and making a session
       const token = jwt.generateToken(
         {
+          name: user.name,
           username: user.username,
           userType: user.userType
         },

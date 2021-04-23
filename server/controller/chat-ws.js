@@ -6,7 +6,7 @@ const chatWs = (expressApp) => {
   io.on('connection', socket => {
     console.log("connected")
     online += 1
-    setInterval((5000, () => io.sockets.emit('new-connection', online)))
+    setTimeout((5000, () => io.sockets.emit('new-connection', online)))
     socket.on('send-message', message => {
       console.log(message)
       io.sockets.emit('new-message', message)

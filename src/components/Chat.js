@@ -25,6 +25,7 @@ function Chat() {
     const msg = e.target.elements["message"].value;
     if(msg)
       socket.emit("send-message", {msg: msg, author: username || "Anonymous"})
+    e.target.reset()
   }
 
   const Message = ({msg, author}) => {
@@ -51,7 +52,7 @@ function Chat() {
             Enter a message:
             <input type="text" name="message" className="form-control" />
           </label>
-          <button type="submit" className="mx-2 btn btn-primary">Submit</button>
+          <button type="submit" className="mx-2 btn btn-primary">Send</button>
         </form>
       </div>
      </div>

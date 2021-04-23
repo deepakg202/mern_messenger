@@ -50,7 +50,7 @@ function LoginPage(props) {
         <button type="submit" className="btn btn-primary">Submit</button>
         </fieldset>
       </form>
-        <div>{error}</div>
+        <div className="mb-3">{error}</div>
       </div>
     </div>
   );

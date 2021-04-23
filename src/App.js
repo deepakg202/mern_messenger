@@ -4,6 +4,8 @@ import { getSession } from "./actions/sessionActions";
 import { useDispatch, useSelector } from "react-redux";
 
 import Login from "./components/Login"
+import Signup from "./components/Signup"
+
 import Chat from "./components/Chat"
 
 import Header from "./components/shared/Header"
@@ -26,6 +28,7 @@ const App = (props) => {
     return (
       <Switch>
         <Route path="/login" exact component={Login} />
+        <Route path="/signup" exact component={Signup} />
         <Route component={() => <Redirect to="/login" />} />
       </Switch>
     );
@@ -36,7 +39,7 @@ const App = (props) => {
     if(isSuperAdmin) {
       return <Route {...props}/>
     }else{
-      return <Route {...props} component={() => <Error message={"Not accessible to normal users"}/>}/>
+      return <Route {...props} component={() => <Error message={"Not accessible to NORMAL users"}/>}/>
     }
   }
 
@@ -45,6 +48,7 @@ const App = (props) => {
     return (
       <Switch>
         <Route path="/login" exact component={() => <Redirect to="/" />} />
+        <Route path="/signup" exact component={() => <Redirect to="/" />} />
         <Route path="/chat" exact component={Chat} />
         <SuperAdminRoute path="/settings" exact component={Settings} />
         <Route path="/" exact component={Dashboard} />

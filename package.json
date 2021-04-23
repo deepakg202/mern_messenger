@@ -2,6 +2,8 @@
   "name": "mern_messenger",
   "version": "0.1.0",
   "private": true,
+  "author": "deepakgupta191199",
+  "git": "https://github.com/deepakgupta191199/mern_messenger.git",
   "license": "MIT",
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.4",
