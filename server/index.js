@@ -4,7 +4,7 @@ const app = express();
 
 const bodyParser = require("body-parser");
 const cookieSession = require("cookie-session");
-// const path = require('path');
+const path = require('path');
 const cors = require("cors");
 
 app.use(bodyParser.json());
@@ -26,10 +26,10 @@ app.use(
 // API Routes
 app.use("/api", require("./controller/routes.js"));
 
-// app.use(express.static(path.join(__dirname, "..", "build")));
-// app.get("/*", (req, res) => {
-//   res.sendFile(path.join(__dirname, "..", "build", "index.html"));
-// });
+app.use(express.static(path.join(__dirname, "..", "build")));
+app.get("/*", (req, res) => {
+  res.sendFile(path.join(__dirname, "..", "build", "index.html"));
+});
 
 const PORT = process.env.PORT ||5000;
 
