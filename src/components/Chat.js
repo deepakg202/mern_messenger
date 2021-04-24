@@ -22,7 +22,7 @@ function Chat() {
 
   const chatHandler = (e) => {
     e.preventDefault();
-    const msg = e.target.elements["message"].value;
+    const msg = e.target["message"].value;
     if(msg)
       socket.emit("send-message", {msg: msg, author: username || "Anonymous"})
     e.target.reset()
@@ -42,16 +42,16 @@ function Chat() {
     <div className="container my-3">
       <div className="h2">Global Chat <span className="text-success h6">Online: {online}</span></div>
       <div className="p-2 border rounded">
-        <div id="chat-window" className="overflow-y-auto bg-dark my-2">
+        <div id="chat-window" className="bg-dark my-2">
           {
             messages.map((m,i) => <Message key={i} msg={m.msg} author={m.author}/>)
           }
         </div>
-        <form className="chat-form" onSubmit={chatHandler}>
-          <label className="form-label">
-            Enter a message:
-            <input type="text" name="message" className="form-control" />
+        <form onSubmit={chatHandler}>
+          <label htmlFor="message" className="form-label">
+            Enter A Message:
           </label>
+          <input type="text" name="message" id="message" className="form-control" autocomplete="off"/>
           <button type="submit" className="mx-2 btn btn-primary">Send</button>
         </form>
       </div>
